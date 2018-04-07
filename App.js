@@ -1,14 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {StackNavigator} from 'react-navigation'
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+
+import reducers from './reducers'
+import DeckList from './containers/DeckList'
+import AddDeck from './containers/AddDeck'
+import AddCard from './containers/AddCard'
+import Quiz from './containers/Quiz'
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={createStore(reducers)}>
+        <View style={styles.container}>
+          <Quiz />
+        </View>
+      </Provider>
     );
   }
 }
@@ -19,5 +28,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop:40
   },
 });
