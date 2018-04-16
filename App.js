@@ -1,33 +1,31 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {StackNavigator} from 'react-navigation'
-import {Provider} from 'react-redux'
+import React from 'react'
+import {View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback} from 'react-native'
+import {TabNavigator, StackNavigator} from 'react-navigation'
+import {FontAwesome, Ionicons} from '@expo/vector-icons'
 import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 
 import reducers from './reducers'
-import DeckList from './containers/DeckList'
-import AddDeck from './containers/AddDeck'
-import AddCard from './containers/AddCard'
-import Quiz from './containers/Quiz'
+import {purple, white} from './utils/colors'
+import {setLocalNotification} from './utils/helpers'
 
-export default class App extends React.Component {
+import UdaciStatusbar from './components/UdaciStatusbar'
+import AppNavigation from './Navigations'
+
+export default class App extends React.Component {  
   render() {
     return (
       <Provider store={createStore(reducers)}>
-        <View style={styles.container}>
-          <Quiz />
+        <View style={{'flex':1}}>
+          <AppNavigation />
         </View>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop:40
-  },
-});

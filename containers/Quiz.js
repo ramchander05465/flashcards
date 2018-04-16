@@ -1,28 +1,77 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Text} from 'react-native'
+import {connect} from 'react-redux'
+
 import TextButton from '../components/TextButton';
 
-class Queze extends Component{
-    state = {
-        input:'welcome'
+class Quez extends Component{
+    cardName = this.props.navigation.state.params.cardName
+    questionList = this.props.deckListInfo[this.cardName].questions
+    state = {quesCount:0, ansCount:0, isHelp:false}
+
+
+    QuezeHandler = (ansType) => {
+        if(ansType === 'correct'){
+            this.setState({
+                quesCount: this.state.quesCount+1,
+                ansCount: this.state.ansCount+1,
+                isHelp: false
+            })
+        }else{
+            this.setState({quesCount: this.state.quesCount+1,})
+        }
     }
 
-    QuezeHandler = () => {
-
-    }
-    render(){
+    renderResult = () => {
         return(
             <View>
-                <Text>Question</Text>
-                <Text>Answer</Text>
-                <TextButton onPress={this.QuezeHandler} label="Currect" style={styles.submitButton} />
-                <TextButton onPress={this.QuezeHandler} label="Incorrect" style={styles.submitButton} />
+                <Text>Currect {(this.state.ansCount*100)/this.questionList.length}%</Text>
+                <TextButton 
+                    onPress={() => this.setState({quesCount:0})} 
+                    label="Restart Quiz" 
+                    style={styles.submitButton} />
+                <TextButton 
+                    onPress={() => this.props.navigation.navigate('DeckList')} 
+                    label="Back to Deck" 
+                    style={styles.submitButton} />
+            </View>
+        )
+    }
+
+    renderQuestion = () => {
+        return(
+            <View>
+                <Text>{this.questionList[this.state.quesCount].question}</Text>
+                {this.state.isHelp 
+                ? <Text>{this.questionList[this.state.quesCount].answer}</Text>
+                : <TextButton onPress={() => this.setState({isHelp:true})} label="Show Answer" style={styles.submitButton} />
+                }
+                <TextButton onPress={() => this.QuezeHandler('correct')} label="Currect" style={styles.submitButton} />
+                <TextButton onPress={() => this.QuezeHandler('incorrect')} label="Incorrect" style={styles.submitButton} />
+            </View>
+        )
+    }
+
+    render(){
+        return(
+            <View style={styles.row}>
+                {this.questionList.length === this.state.quesCount
+                ? this.renderResult()
+                : this.renderQuestion()
+                }
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    row:{
+        flex:1,
+        borderRadius: 7,
+        backgroundColor:'gray',
+        padding:30,
+        margin:10
+    },
     submitButton: {
         backgroundColor: '#7a42f4',
         padding: 10,
@@ -34,4 +83,11 @@ const styles = StyleSheet.create({
     color: 'white'
     }
 })
-export default Queze
+
+const mapStateToProps = (state) => {
+    return{
+      deckListInfo:state.demoDeck
+    }
+}
+
+export default connect(mapStateToProps)(Quez)

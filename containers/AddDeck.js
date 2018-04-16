@@ -1,31 +1,56 @@
 import React, {Component} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, TextInput, Text} from 'react-native'
+import {connect} from 'react-redux'
 
-import TextBox from '../components/TextBox'
-import TextButton from '../components/TextButton';
+import {addDeck} from '../actions'
+import {add_Deck} from '../utils/api'
+import TextButton from '../components/TextButton'
 
 class AddDeck extends Component{
-    state = {
-        input:'welcome'
-    }
-    deckNameHandler = () => {
+    state = {deckName:'', status:false}
 
+    deckNameHandler = (txt) => {
+        this.setState({deckName:txt})
     }
 
     addDeckHandler = () => {
+        const {dispatch} = this.props
+        const {deckName} = this.state
 
+        add_Deck(deckName)
+            .then((deck) => dispatch(addDeck(deck)))
+            .then((result) => {
+                this.setState({
+                    deckName:'',
+                    status:true
+                })
+            })
     }
     render(){
         return(
-            <View>
-                <TextBox label="Deck Name" values = {this.state.input} onChange={this.deckNameHandler} />
-                <TextButton onPress={this.addDeckHandler} label="Add Deck" style={styles.submitButton} />
+            <View style={styles.row}>                
+                <Text>Deck Name</Text>
+                {this.state.status ? <Text>Deck has been saved</Text> : '' }
+                <TextInput
+                    value = {this.state.values}
+                    onChangeText = {(text) => this.deckNameHandler(text)} />
+                <TextButton 
+                    onPress={() => this.addDeckHandler()} 
+                    label="Add Deck" 
+                    style={styles.submitButton} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    row:{
+        flex:1,
+        borderRadius: 7,
+        backgroundColor:'gray',
+        padding:30,
+        margin:10
+    },
     submitButton: {
         backgroundColor: '#7a42f4',
         padding: 10,
@@ -36,4 +61,10 @@ const styles = StyleSheet.create({
     color: 'white'
     }
 })
-export default AddDeck
+ 
+const mapStateToProps = (state) => {
+    return{
+      deckListInfo:state.demoDeck
+    }
+}
+export default connect(mapStateToProps)(AddDeck)

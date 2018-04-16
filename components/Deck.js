@@ -1,16 +1,18 @@
-import React from 'react'
-import {View, Text, StyleSheet } from 'react-native'
+import React, {Component} from 'react'
+import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 import TextButton from './TextButton'
 
-const Deck = (props) => {
-    const {title, questions} = props.deckInfo
-    return(
-        <View style={styles.row}>
-            <Text style={styles.deckHeading}>{title}</Text>
-            <Text style={styles.textStyle}>{questions.length} Cards</Text>
-        </View>
-    )
+class Deck extends Component{
+    render(){
+        const {title, questions} = this.props.deckInfo
+        return(
+            <View style={styles.row}>
+                <Text style={styles.deckHeading}>{title}</Text>
+                <Text style={styles.textStyle}>{questions.length} Cards</Text>                     
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
