@@ -27,7 +27,7 @@ class Quez extends Component{
             <View>
                 <Text>Currect {((this.state.ansCount*100)/this.questionList.length).toFixed(2)}%</Text>
                 <TextButton 
-                    onPress={() => this.setState({quesCount:0})} 
+                    onPress={() => this.setState({quesCount:0, ansCount:0, isHelp:false })} 
                     label="Restart Quiz" 
                     style={styles.submitButton} />
                 <TextButton 

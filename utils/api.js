@@ -2,7 +2,8 @@ import {AsyncStorage} from 'react-native'
 
 export const add_Deck = (key) => {     
     const obj = JSON.stringify({[key]:{title: key, questions: []}})
-    return AsyncStorage.mergeItem('deckList', obj).then(() => (obj))
+    return AsyncStorage.mergeItem('deckList', obj)
+        .then(() => AsyncStorage.getItem('deckList'))
 }
 
 export const get_Deck = () => {
@@ -12,5 +13,5 @@ export const get_Deck = () => {
 
 export const add_Card = (data) => {
     return AsyncStorage.setItem('deckList', JSON.stringify(data))
-        .then(() => (data))
+        .then(() => AsyncStorage.getItem('deckList'))
 }

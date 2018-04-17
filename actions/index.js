@@ -5,6 +5,7 @@ export const ADD_CARD = 'ADD_CARD'
 
 
 export const addDeck = (deck) => {
+    console.log('---------',deck)
     return{
         type:ADD_DECK,
         deck
@@ -18,7 +19,6 @@ export const getDeck = (deckList) => {
 }
 
 export const addCard = (card) => {
-    console.log('Card has been added ',card)
     return {
         type:ADD_CARD,
         card

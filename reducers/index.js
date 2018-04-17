@@ -6,16 +6,15 @@ const reducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
         case GET_DECK:
           return{
-            ...state,
             demoDeck:action.deckList
           }
         case ADD_DECK:
           return{
-            ...state
+            demoDeck:action.deck
           }
         case ADD_CARD:
+          console.log(action.card)
           return{
-            ...state,
             demoDeck:action.card
           }
         default:

@@ -14,14 +14,16 @@ class AddDeck extends Component{
     }
 
     addDeckHandler = () => {
-        const {dispatch} = this.props
-        const {deckName} = this.state
         
-        add_Deck(deckName)
-            .then((deck) => dispatch(addDeck(deck)))
-            .then((result) => {
-                this.setState({deckName:'',status:true})                
-            })
+            const {dispatch} = this.props
+            const {deckName} = this.state
+            if(deckName !==''){
+                add_Deck(deckName).then((deck) => dispatch(addDeck(JSON.parse(deck))))
+            }else{
+                alert('Pleae enter deck name')
+            }
+            this.setState({deckName:'',status:true})
+        
     }
     render(){
         return(

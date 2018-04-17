@@ -14,10 +14,10 @@ class AddCard extends Component{
         if(this.state.question !== ''){
             const {dispatch} = this.props
             const data = {question:this.state.question, answer:this.state.answer}
-            let deckListInfo = this.props.deckListInfo
-            deckListInfo[this.cardName].questions.push(data)
+            let dataList = this.props.deckListInfo
+            dataList[this.cardName].questions.push(data)
             
-            add_Card(deckListInfo).then((card) => dispatch(addCard(card)))
+            add_Card(dataList).then((card) => dispatch(addCard(JSON.parse(card))))
 
             this.setState({question:'', answer:'', status:true}) 
         }       
