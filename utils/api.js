@@ -10,11 +10,7 @@ export const get_Deck = () => {
         .then((result) => JSON.parse(result))
 }
 
-export const add_Card = (key, data) => {
-    return AsyncStorage.getItem('deckList')
-        .then((result) => {
-            const response = JSON.parse(result)
-            response[key].questions.push(data)
-            AsyncStorage.setItem('deckList', JSON.stringify(response))
-        })
+export const add_Card = (data) => {
+    return AsyncStorage.setItem('deckList', JSON.stringify(data))
+        .then(() => (data))
 }

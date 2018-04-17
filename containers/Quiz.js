@@ -18,14 +18,14 @@ class Quez extends Component{
                 isHelp: false
             })
         }else{
-            this.setState({quesCount: this.state.quesCount+1,})
+            this.setState({quesCount: this.state.quesCount+1, isHelp: false})
         }
     }
 
     renderResult = () => {
         return(
             <View>
-                <Text>Currect {(this.state.ansCount*100)/this.questionList.length}%</Text>
+                <Text>Currect {((this.state.ansCount*100)/this.questionList.length).toFixed(2)}%</Text>
                 <TextButton 
                     onPress={() => this.setState({quesCount:0})} 
                     label="Restart Quiz" 

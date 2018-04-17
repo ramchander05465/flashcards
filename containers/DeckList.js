@@ -36,13 +36,16 @@ class DeckList extends Component{
       )
     }
     return(
-      <ScrollView style={{paddingTop:20}}>
+      <View>
         <TextButton 
           onPress={() => this.props.navigation.navigate('AddDeck')}
           label="Add Deck" 
-          style={styles.submitButton} />
-        {this.renderDeck()}
-      </ScrollView>
+          style={styles.submitButton} /> 
+        <ScrollView style={{paddingTop:10}}>               
+          {this.renderDeck()}
+        </ScrollView>
+      </View>
+      
     )
   }
 }
@@ -50,10 +53,12 @@ class DeckList extends Component{
 const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: '#7a42f4',
-    padding: 10,
+    width:80,
     height: 40,
-    justifyContent:'center',
-    marginTop:10
+    padding:10,
+    borderRadius:5,
+    marginTop:10,
+    marginLeft:10
   }
 })
 

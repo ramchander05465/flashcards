@@ -16,21 +16,17 @@ class AddDeck extends Component{
     addDeckHandler = () => {
         const {dispatch} = this.props
         const {deckName} = this.state
-
+        
         add_Deck(deckName)
             .then((deck) => dispatch(addDeck(deck)))
             .then((result) => {
-                this.setState({
-                    deckName:'',
-                    status:true
-                })
+                this.setState({deckName:'',status:true})                
             })
     }
     render(){
         return(
             <View style={styles.row}>                
                 <Text>Deck Name</Text>
-                {this.state.status ? <Text>Deck has been saved</Text> : '' }
                 <TextInput
                     value = {this.state.values}
                     onChangeText = {(text) => this.deckNameHandler(text)} />
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
     },
     submitButtonText:{
-    color: 'white'
+        color: 'white'
     }
 })
  

@@ -10,13 +10,13 @@ const reducer = (state = INITIAL_STATE, action) => {
             demoDeck:action.deckList
           }
         case ADD_DECK:
-          console.log('add_deck', action.deck)
           return{
             ...state
           }
         case ADD_CARD:
           return{
-            ...state
+            ...state,
+            demoDeck:action.card
           }
         default:
           return state

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, StyleSheet} from 'react-native'
+import {connect} from 'react-redux'
 
 import {add_Card} from '../utils/api'
 import {addCard} from '../actions'
@@ -10,31 +11,33 @@ class AddCard extends Component{
     state = {question:'', answer:'', status:false}
     
     AddCardHandler = () => {
-        const {dispatch} = this.props
-        const data = {question:this.state.question, answer:this.state.answer}
+        if(this.state.question !== ''){
+            const {dispatch} = this.props
+            const data = {question:this.state.question, answer:this.state.answer}
+            let deckListInfo = this.props.deckListInfo
+            deckListInfo[this.cardName].questions.push(data)
+            
+            add_Card(deckListInfo).then((card) => dispatch(addCard(card)))
 
-        add_Card(this.cardName, data).then((card) => dispatch(addCard(card)))
-
-        this.setState({question:'', answer:'', status:true})        
+            this.setState({question:'', answer:'', status:true}) 
+        }       
     }
 
     render(){
         return(
-            <View style={styles.row}>
-                <View>
-                    <Text style={styles.label}>question</Text>
-                    <TextInput
-                        value={this.state.question}
-                        style={styles.input}
-                        onChangeText={(text) => this.setState({question: text})} />
-                </View>
-                <View>
-                    <Text style={styles.label}>Answer</Text>
-                    <TextInput
-                        value={this.state.answer}
-                        style={styles.input}
-                        onChangeText={(text) => this.setState({answer: text})} />
-                </View>
+            <View style={styles.row}>              
+                <Text style={styles.label}>question</Text>
+                <TextInput
+                    value={this.state.question}
+                    style={{padding:5}}
+                    onChangeText={(text) => this.setState({question: text})} />
+            
+                <Text style={styles.label}>Answer</Text>
+                <TextInput
+                    value={this.state.answer}
+                    style={{padding:5}}
+                    onChangeText={(text) => this.setState({answer: text})} />
+                
                 <TextButton 
                     onPress={() => this.AddCardHandler()} 
                     label="Add Card" 
@@ -62,13 +65,14 @@ const styles = StyleSheet.create({
     submitButtonText:{
         color: 'white'
     },
-    input: {
-        height: 40,
-        width:150,
-    },
     label:{
-         fontSize:25,
+        fontSize:16,
+        paddingTop:20
      }
 })
-
-export default AddCard
+const mapStateToProps = (state) => {
+    return{
+      deckListInfo:state.demoDeck
+    }
+}
+export default connect(mapStateToProps)(AddCard)
