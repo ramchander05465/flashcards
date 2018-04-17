@@ -29,18 +29,13 @@ class DeckList extends Component{
   render(){
     if(this.props.deckListInfo === null || this.props.deckListInfo === {}){
       return(
-        <TextButton 
-          onPress={() => this.props.navigation.navigate('AddDeck')}
-          label="Add Deck" 
-          style={styles.submitButton} />
+        <View>
+          <Text>No deck available!!</Text>
+        </View>
       )
     }
     return(
-      <View>
-        <TextButton 
-          onPress={() => this.props.navigation.navigate('AddDeck')}
-          label="Add Deck" 
-          style={styles.submitButton} /> 
+      <View> 
         <ScrollView style={{paddingTop:10}}>               
           {this.renderDeck()}
         </ScrollView>

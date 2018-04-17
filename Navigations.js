@@ -7,8 +7,7 @@ import AddDeck from './containers/AddDeck'
 import AddCard from './containers/AddCard'
 import Quiz from './containers/Quiz'
 
-  
-  const AppNavigation = StackNavigator({
+  const Tabs = TabNavigator({
     DeckList:{
       screen:DeckList,
       navigationOptions:{
@@ -19,6 +18,15 @@ import Quiz from './containers/Quiz'
       screen:AddDeck,
       navigationOptions:{
         title:'Add Deck'
+      }
+    }
+  })
+  
+  const AppNavigation = StackNavigator({
+    DeckList:{
+      screen:Tabs,
+      navigationOptions:{
+        title:'Decks'
       }
     },
     AddCard:{
