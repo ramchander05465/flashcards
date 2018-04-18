@@ -9,6 +9,12 @@ class Quez extends Component{
     questionList = this.props.deckListInfo[this.cardName].questions
     state = {quesCount:0, ansCount:0, isHelp:false}
 
+    static navigationOptions = ({ navigation, navigationOptions }) => {
+        const { params } = navigation.state;
+        return{
+            headerTitle: params.cardName
+        }
+    }
 
     QuezeHandler = (ansType) => {
         if(ansType === 'correct'){
@@ -31,7 +37,7 @@ class Quez extends Component{
                     label="Restart Quiz" 
                     style={styles.submitButton} />
                 <TextButton 
-                    onPress={() => this.props.navigation.navigate('DeckList')} 
+                    onPress={() => this.props.navigation.navigate('Card', {cardName:this.cardName})} 
                     label="Back to Deck" 
                     style={styles.submitButton} />
             </View>
@@ -41,6 +47,7 @@ class Quez extends Component{
     renderQuestion = () => {
         return(
             <View>
+                <Text>Question No   {this.state.quesCount+1}/{this.questionList.length}</Text>
                 <Text>{this.questionList[this.state.quesCount].question}</Text>
                 {this.state.isHelp 
                 ? <Text>{this.questionList[this.state.quesCount].answer}</Text>
@@ -53,6 +60,17 @@ class Quez extends Component{
     }
 
     render(){
+        if(this.questionList.length === 0){
+            return(
+                <View>
+                    <Text>No Cards available!!</Text>
+                    <TextButton 
+                    onPress={() => this.props.navigation.navigate('Card', {cardName:this.cardName})} 
+                    label="Back to Deck" 
+                    style={styles.submitButton} />
+                </View>
+            )
+        }
         return(
             <View style={styles.row}>
                 {this.questionList.length === this.state.quesCount

@@ -17,11 +17,16 @@ class AddCard extends Component{
             let dataList = this.props.deckListInfo
             dataList[this.cardName].questions.push(data)
             
-            add_Card(dataList).then((card) => dispatch(addCard(JSON.parse(card))))
+            add_Card(dataList)
+                .then((card) => dispatch(addCard(JSON.parse(card))))
+                .then(() => alert('Question has added'))
+
 
             this.setState({question:'', answer:'', status:true}) 
         }       
     }
+
+
 
     render(){
         return(

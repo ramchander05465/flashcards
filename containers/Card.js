@@ -3,11 +3,25 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import {connect} from 'react-redux'
 
 import TextButton from '../components/TextButton'
+import {HeaderLeftRoute} from '../components/HeaderLeftArrow'
 
 class Card extends Component{
+    cardName = this.props.navigation.state.params.cardName
+
+    static navigationOptions = ({ navigation }) => {
+        const { cardName } = navigation.state.params;
+        return {
+            headerTitle: cardName,
+            headerLeft: <HeaderLeftRoute navigateToRoute={
+            () => {
+              navigation.navigate('DeckList')
+            }
+          } />
+        }
+      }
+    
     render(){
-        const cardName = this.props.navigation.state.params.cardName
-        const cardInfo = this.props.deckListInfo[cardName]
+        const cardInfo = this.props.deckListInfo[this.cardName]
         
         return(
             <View style={styles.row}>
@@ -15,12 +29,12 @@ class Card extends Component{
                 <Text style={styles.textStyle}>{cardInfo.questions.length} Cards</Text>
                 <TextButton 
                     label="Add Card"
-                    onPress={() => this.props.navigation.navigate('AddCard', {cardName:cardName})}
+                    onPress={() => this.props.navigation.navigate('AddCard', {cardName:this.cardName})}
                     style={[styles.submitButton, {backgroundColor: 'green',}]}/>
             
                 <TextButton 
-                    label="Start Quize"
-                    onPress={() => this.props.navigation.navigate('Quiz', {cardName:cardName})}
+                    label="Start Quiz"
+                    onPress={() => this.props.navigation.navigate('Quiz', {cardName:this.cardName})}
                     style={[styles.submitButton, {backgroundColor: 'red',}]}/>
                 
             </View>

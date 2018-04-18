@@ -18,7 +18,9 @@ class AddDeck extends Component{
             const {dispatch} = this.props
             const {deckName} = this.state
             if(deckName !==''){
-                add_Deck(deckName).then((deck) => dispatch(addDeck(JSON.parse(deck))))
+                add_Deck(deckName)
+                    .then((deck) => dispatch(addDeck(JSON.parse(deck))))
+                    .then(() => this.props.navigation.navigate('Card', {cardName:deckName}))
             }else{
                 alert('Pleae enter deck name')
             }

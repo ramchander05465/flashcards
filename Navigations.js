@@ -26,7 +26,8 @@ import Quiz from './containers/Quiz'
     DeckList:{
       screen:Tabs,
       navigationOptions:{
-        title:'Decks'
+        title:'Decks',
+        headerLeft: null
       }
     },
     AddCard:{
